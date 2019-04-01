@@ -72,4 +72,4 @@ export default class Movie extends Component {
       // </div>
     );
   }
-}
+]
