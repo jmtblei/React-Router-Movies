@@ -17,4 +17,4 @@ export default class SavedList extends Component {
       </div>
     );
   }
-]
+}
