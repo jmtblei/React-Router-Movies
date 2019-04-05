@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import MovieCard from './MovieCard';
-import { Route } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default class Movie extends Component {
   constructor(props) {
@@ -28,48 +28,35 @@ export default class Movie extends Component {
       });
   };
   // Uncomment this code when you're ready for the stretch problems
-  // componentWillReceiveProps(newProps){
-  //   if(this.props.match.params.id !== newProps.match.params.id){
-  //     this.fetchMovie(newProps.match.params.id);
-  //   }
-  // }
+  componentWillReceiveProps(newProps){
+    if(this.props.match.params.id !== newProps.match.params.id){
+      this.fetchMovie(newProps.match.params.id);
+    }
+  }
 
-  // saveMovie = () => {
-  //   const addToSavedList = this.props.addToSavedList;
-  //   addToSavedList(this.state.movie)
-  // }
+  saveMovie = () => {
+    const addToSavedList = this.props.addToSavedList;
+    addToSavedList(this.state.movie)
+  }
+
+  removeMovie = () => {
+    const removeFromList = this.props.removeFromList;
+    removeFromList(this.state.movie)
+  }
 
   render() {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
     }
-
     const movie = this.state.movie;
     return (
-      <Route exact path='/movies/:id'
-        render={() => 
-          <MovieCard movie={movie} />
-        }
-      />
-      // <div className="save-wrapper">
-      //   <div className="movie-card">
-      //     <h2>{title}</h2>
-      //     <div className="movie-director">
-      //       Director: <em>{director}</em>
-      //     </div>
-      //     <div className="movie-metascore">
-      //       Metascore: <strong>{metascore}</strong>
-      //     </div>
-      //     <h3>Actors</h3>
-
-      //     {stars.map(star => (
-      //       <div key={star} className="movie-star">
-      //         {star}
-      //       </div>
-      //     ))}
-      //   </div>
-      //   <div className="save-button">Save</div>
-      // </div>
+      <div className="save-wrapper">
+        <NavLink to={'/movies/:id'}>
+          <MovieCard movie={movie}saveMovie={this.saveMovie} />
+        </NavLink>
+        <div onClick={this.saveMovie} className="save-button">Save</div>
+        <div onClick={this.removeMovie} className="remove-button">Remove</div>
+      </div>
     );
   }
 }
